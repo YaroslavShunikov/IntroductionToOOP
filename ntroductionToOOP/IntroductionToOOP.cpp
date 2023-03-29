@@ -21,7 +21,7 @@ public:
 	{
 		this->y = y;
 	}
-	double distance(const Point& axis) const
+	double distance(const Point axis) const
 	{
 		double distance_X = this->x - axis.x;
 		double distance_Y = this->y - axis.y;
@@ -30,7 +30,7 @@ public:
 	}
 };
 
-double distance(const Point& A, Point& B);
+double distance(const Point A, Point B);
 
 //#define STRUCT_POINT
 
@@ -61,7 +61,7 @@ void main()
 
 }
 
-double distance(const Point& A, Point& B)
+double distance(const Point A, Point B)
 {
 	double Xaxis = A.get_x() - B.get_x();
 	double Yaxis = A.get_y() - B.get_y();
