@@ -1,5 +1,10 @@
 #include<iostream>
 using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;
+
+#define delimiter "\n--------------------------------------------\n"
 class Point
 {
 	double x;
@@ -21,18 +26,64 @@ public:
 	{
 		this->y = y;
 	}
-	double distance(const Point axis) const
+	// Constructors
+	Point()
 	{
-		double distance_X = this->x - axis.x;
-		double distance_Y = this->y - axis.y;
+		x = y = 0;
+		cout << "Constructor:\t" << this << endl;
+	}
+	Point(double x)
+	{
+		this->x = x;
+		y = 0;
+		cout << "1ArgConstructor:" << this << endl;
+	}
+	Point(double x, double y)
+	{
+		this->x = x;
+		this->y = y;
+		cout << "Constructor:\t" << this << endl;
+	}
+	Point(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyConstructor:" << this << endl;
+	}
+	~Point()
+	{
+		cout << "Destructor:\t" << this << endl;
+	}
+
+	// Operators:
+	Point& operator=(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyAsignment:" << this << endl;
+		return *this;
+	}
+	
+	// Methods: 
+	double distance(const Point& dot) const
+	{
+		double distance_X = this->x - dot.x;
+		double distance_Y = this->y - dot.y;
 		double distance = sqrt(distance_X * distance_X + distance_Y * distance_Y);  //Formula distance between two points
 		return distance;
 	}
+	void print()
+	{
+		cout << "X = " << x << "\tY = " << y << endl;
+	}
 };
 
-double distance(const Point A, Point B);
-
 //#define STRUCT_POINT
+//#define Distance_check
+//#define CONSTRUCTORS_CHECK
+//#define ASSIGNMENT_OPERATOR
+double distance(const Point& A,const Point& B);
+
 
 void main()
 {
@@ -46,25 +97,62 @@ void main()
 	Point* pA = &A;
 	cout << pA->x << "\t" << pA->y << endl;
 #endif
-
+#ifdef Distance_check
 	Point A;
 	A.set_x(5);
 	A.set_y(8);
 	Point B;
 	B.set_x(2);
 	B.set_y(4);
-	cout << A.get_x() << "\t" << A.get_y() << endl;
-	cout << B.get_x() << "\t" << B.get_y() << endl;
 
-	cout << "Расстояние от точки А до точки В: " << A.distance(B) << endl;
+	A.print();
+	B.print();
+
+	cout << delimiter << endl;
+	cout << "Расстояние между точками А и В: " << A.distance(B) << endl;
+	cout << delimiter << endl;
 	cout << "Расстояние между точками А и В: " << distance(A, B) << endl;
+	cout << delimiter << endl;
+
+#endif 
+#ifdef CONSTRUCTORS_CHECK
+
+	Point A;    //Вызывается конструктор по умолчанию 
+	A.print();
+
+	Point B = 5;
+	B.print();
+
+	Point C(3, 5);
+	C.print();
+
+	Point D = C;    //Copy constructor
+	D.print();
+
+	Point E;        //Assignment operator
+	E = D;
+	E.print();
+#endif 
+#ifdef ASSIGNMENT_OPERATOR
+	int a, b, c;
+	a = b = c = 0;
+	cout << a << "\t" << b << "\t" << c << endl;
+	Point A, B, C;
+	cout << delimiter << endl;
+	A = B = C = Point(2, 3);
+	cout << delimiter << endl;
+	A.print();
+	B.print();
+	C.print();
+#endif 
+
 
 }
 
-double distance(const Point A, Point B)
+double distance(const Point& A,const Point& B)
 {
-	double Xaxis = A.get_x() - B.get_x();
-	double Yaxis = A.get_y() - B.get_y();
-	double distance = sqrt(Xaxis * Xaxis + Yaxis * Yaxis);
+	double Xdot = A.get_x() - B.get_x();
+	double Ydot = A.get_y() - B.get_y();
+	double distance = sqrt(Xdot * Xdot + Ydot * Ydot);
 	return distance;
 }
