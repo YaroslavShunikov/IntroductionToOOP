@@ -34,6 +34,7 @@ public:
 	}
 	void set_denominator(int denominator)
 	{
+		if (denominator == 0)denominator = 1;
 		this->denominator = denominator;
 	}
 	// Constructors
